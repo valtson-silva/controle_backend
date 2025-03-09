@@ -1,0 +1,14 @@
+services:
+  - name: django-backend
+    type: web
+    env: docker
+    repo: https://github.com/valtson-silva/controle_backend.git
+    region: oregon  
+    plan: free  
+    envVars:
+      - key: DATABASE_URL
+        value: "postgresql://db_inventory_management_user:Z4ReFqsLNRiqVlG1Mkh8jSHwgqb39wG6@dpg-cv6g9iij1k6c73e506mg-a/db_inventory_management"
+      - key: REDIS_URL
+        value: "redis://red-cv6g3aqn91rc73bf3a4g:6379"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
