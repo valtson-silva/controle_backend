@@ -13,7 +13,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG")
 
-ALLOWED_HOSTS = ["https://controle-de-estoque-woad.vercel.app", "controle-de-estoque-backend.onrender.com"]
+ALLOWED_HOSTS = ["https://controle-de-estoque-woad.vercel.app", "https://controle-backend.onrender.com"]
 
 
 # Application definition
@@ -70,10 +70,10 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 CSRF_COOKIE_AGE = 31449600
 
 CORS_ALLOWED_ORIGINS = [
-      "https://controle-de-estoque-woad.vercel.app",
+      
 ]
 
-SESSION_COOKIE_DOMAIN = 'controle-de-estoque-backend.onrender.com'
+SESSION_COOKIE_DOMAIN = 'https://controle-backend.onrender.com'
 
 CORS_ALLOW_HEADERS = [
     'content-type',
