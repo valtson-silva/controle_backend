@@ -1,6 +1,7 @@
 from pathlib import Path
 from decouple import config
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,7 +13,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["https://controle-de-estoque-woad.vercel.app", "controle-de-estoque-backend.onrender.com"]
 
 
 # Application definition
@@ -62,20 +63,36 @@ TEMPLATES = [
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-SESSION_COOKIE_AGE = 86400
+SESSION_COOKIE_AGE = 604800
 
-CSRF_COOKIE_SECURE = False
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  
 
-
+CSRF_COOKIE_AGE = 31449600
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5500",  # Permite requisições do front-end local
-    "http://localhost:5500",  # Outra forma local, caso necessário
+      "https://controle-de-estoque-woad.vercel.app",
 ]
 
-CORS_ALLOW_CREDENTIALS = True
+SESSION_COOKIE_DOMAIN = 'controle-de-estoque-backend.onrender.com'
 
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:5500"]
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization',
+    'x-csrftoken',  
+    'accept',
+    'x-requested-with',
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_COOKIE_NAME = "csrftoken"  
+CSRF_COOKIE_HTTPONLY = False   
+CSRF_COOKIE_SECURE = True       
+CSRF_COOKIE_SAMESITE = 'None'  
+
+SESSION_COOKIE_SECURE = True    
+SESSION_COOKIE_SAMESITE = 'None'
+
+CORS_ALLOW_CREDENTIALS = True
 
 WSGI_APPLICATION = 'inventory_management.wsgi.application'
 
@@ -84,14 +101,7 @@ WSGI_APPLICATION = 'inventory_management.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config("DB_NAME"),
-        'USER': config("DB_USER"),
-        'PASSWORD': config("DB_PASSWORD"),
-        'HOST': config("HOST", default="db"),
-        'PORT': config('PORT', default='5432')
-    }
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
 
 
@@ -154,10 +164,7 @@ REST_FRAMEWORK = {
 
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://redis:6379/1",  
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": os.getenv("CACHE_URL", "redis://127.0.0.1:6379"),  
     }
 }
