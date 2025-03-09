@@ -13,7 +13,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG")
 
-ALLOWED_HOSTS = ["https://controle-de-estoque-woad.vercel.app", "https://controle-backend.onrender.com"]
+ALLOWED_HOSTS = ["https://controle-de-estoque-woad.vercel.app", "controle-backend.onrender.com"]
 
 
 # Application definition
